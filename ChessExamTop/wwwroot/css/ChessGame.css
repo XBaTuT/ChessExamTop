@@ -1,0 +1,30 @@
+﻿.main-block{
+    margin: 30px auto;
+    border: 1px solid black;
+}
+
+.black{
+    width: 100px;
+    height: 100px;
+    background: #000;
+}
+.go{
+    width: 100px;
+    height: 100px;
+    background: green;
+}
+.kill{
+    width: 100px;
+    height: 100px;
+    background: red;
+
+}
+.black_selected{
+    width: 100px;
+    height: 100px;
+    background: rgb(73, 71, 71);
+}
+.white{
+    width: 100px;
+    height: 100px;
+}
