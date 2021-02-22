@@ -1,4 +1,11 @@
-﻿function drawChess(map) {
+﻿function drawChess() {
+    myNode = document.getElementsByClassName('main-block');
+    myNode = myNode[0];
+    if(myNode != null) {
+        while (myNode.lastElementChild) {
+            myNode.removeChild(myNode.lastElementChild);
+        }
+    }
     let table = document.querySelector(".main-block");
     for (let i = 1; i < 9; i++) {
         let tr = document.createElement('tr');
@@ -17,25 +24,43 @@
                 td.setAttribute('color','white')
                 td.className = 'black';
                 td.innerHTML = '<svg height="100" width="100"><circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="white" /></svg>';
+                if(turn == 'white'){
+                    td.addEventListener('click', function(){
+                        let selected = document.getElementsByClassName('black_selected');
+                        selected = selected[0];
+                        if(selected != null){
+                            selected.className = 'black';   
+                        }
+                        let go = document.getElementsByClassName('go');
+                        length = go.length;
+                        for(let t = length - 1; t >= 0; --t){
+                            go[t].className = 'black';
+                        }
+                        this.className = 'black_selected';
+                        step(map);
+                    });
+                }
             }
             if(map[i][j] == 'black_figure'){
                 td.setAttribute('color','black')
                 td.className = 'black';
                 td.innerHTML = '<svg height="100" width="100"><circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" /></svg>';
-                td.addEventListener('click', function(){
-                    let selected = document.getElementsByClassName('black_selected');
-                    selected = selected[0];
-                    if(selected != null){
-                        selected.className = 'black';   
-                    }
-                    let go = document.getElementsByClassName('go');
-                    length = go.length;
-                    for(let t = length - 1; t >= 0; --t){
-                        go[t].className = 'black';
-                    }
-                    this.className = 'black_selected';
-                    step(map);
-                });
+                if(turn == 'black'){
+                    td.addEventListener('click', function(){
+                        let selected = document.getElementsByClassName('black_selected');
+                        selected = selected[0];
+                        if(selected != null){
+                            selected.className = 'black';   
+                        }
+                        let go = document.getElementsByClassName('go');
+                        length = go.length;
+                        for(let t = length - 1; t >= 0; --t){
+                            go[t].className = 'black';
+                        }
+                        this.className = 'black_selected';
+                        step(map);
+                    });
+                }
             }
             tr.appendChild(td);
         }
@@ -43,29 +68,46 @@
     }
     document.body.appendChild(table);
 }
+function makeStep(x,y,x_step,y_step,x_max,y_max,selectedChecker,bottom){
+    enemy_color = selectedChecker.getAttribute('color') != 'black' ? 'black' : 'white';
+    one = document.getElementById('cell-'+x_step+'-'+y_step);
+    one_shot = document.getElementById('cell-'+x_max+'-'+y_max);
+    if((one != null) && (one.getAttribute('color') != selectedChecker.getAttribute('color'))){
+        if((enemy_color == one.getAttribute('color'))&& (one_shot != null)  &&(one.getAttribute('color') != selectedChecker.getAttribute('color'))){
+            let r_color = one_shot.getAttribute('color');
+            if(r_color == null){
+                one_shot.className = 'kill';
+                one_shot.addEventListener('click',function(){
+                    map[y_max][x_max] = map[y][x];
+                    map[y_step][x_step] = 'black';
+                    map[y][x] = 'black';
+                    turn = turn != 'black' ? 'black' : 'white';
+                    drawChess()
+            });
+            }
+        } else {
+            let top = turn == 'black' ? y > y_step : y < y_step;
+            if((one.getAttribute('color') != enemy_color)&& (top)){
+                one.className = 'go';
+                one.addEventListener('click',function(){
+                    map[y_step][x_step] = map[y][x];
+                    map[y][x] = 'black';
+                    turn = turn != 'black' ? 'black' : 'white';
+                    drawChess();
+                });
+            }
+        }
+    }
+}
 function step(map){
     selectedChecker = document.getElementsByClassName('black_selected');
     selectedChecker = selectedChecker[0];
-    // alert(selectedChecker.className);
     x = selectedChecker.getAttribute('x');
     y = selectedChecker.getAttribute('y');
-
-    right_top = document.getElementById('cell-'+(Number(x)+1)+'-'+(Number(y)-1));
-    right_bottom = document.getElementById('cell-'+(Number(x)+1)+'-'+(Number(y)+1));
-    left_top = document.getElementById('cell-'+(Number(x)-1)+'-'+(Number(y)-1));
-    left_bottom = document.getElementById('cell-'+(Number(x)-1)+'-'+(Number(y)+1));
-    if((right_top != null) && (right_top.getAttribute('color') != selectedChecker.getAttribute('color'))){
-        right_top.className = 'go';
-    }
-    if((left_top != null) && (left_top.getAttribute('color') != selectedChecker.getAttribute('color'))){
-        left_top.className = 'go';
-    }
-    if((right_bottom != null) && (right_bottom.getAttribute('color') != selectedChecker.getAttribute('color'))){
-        right_bottom.className = 'go';
-    }
-    if((left_bottom != null) && (left_bottom.getAttribute('color') != selectedChecker.getAttribute('color'))){
-        left_bottom.className = 'go';
-    }
+    makeStep(Number(x), Number(y),Number(x)+1, Number(y)-1, Number(x)+2, Number(y)-2,selectedChecker,0);
+    makeStep(Number(x), Number(y),Number(x)+1, Number(y)+1, Number(x)+2, Number(y)+2,selectedChecker,1);
+    makeStep(Number(x), Number(y),Number(x)-1, Number(y)-1, Number(x)-2, Number(y)-2,selectedChecker,0);
+    makeStep(Number(x), Number(y),Number(x)-1, Number(y)+1, Number(x)-2, Number(y)+2,selectedChecker,1);
 }
 function initiateMap(){
     let map = [];
@@ -90,6 +132,7 @@ function initiateMap(){
     }
     return map;
 }
+let turn = 'white';
 let map = initiateMap();
 // let selectedChecker = [];
 drawChess(map);
