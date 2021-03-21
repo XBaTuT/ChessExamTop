@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace ChessExamTop.Models
 {
-    public class Babich
+    public class Chess
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+
     }
 }

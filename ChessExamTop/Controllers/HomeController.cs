@@ -26,8 +26,8 @@ namespace ChessExamTop.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var Data = await _context.Babiches.ToListAsync();
-            return View(Data);
+          
+            return View();
         }
 
         public IActionResult Privacy()

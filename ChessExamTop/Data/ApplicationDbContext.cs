@@ -14,7 +14,7 @@ namespace ChessExamTop.Data
         {
 
         }
-        public DbSet<Babich> Babiches { get; set; }
+       
     }
 
 }
