@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="ChessExamTop\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
 </Project>

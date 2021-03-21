@@ -14,7 +14,8 @@ namespace ChessExamTop.Data
         {
 
         }
-       
+        public DbSet<ChessGame> ChessGames { get; set; }
+
     }
 
 }

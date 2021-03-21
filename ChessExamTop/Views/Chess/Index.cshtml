@@ -1,0 +1,14 @@
+@using ChessExamTop.Models
+@{
+    ViewData["Title"] = "Chess Games";
+}
+
+<ul class="list-group">
+@foreach (var item in Model)
+{  
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        @item.Name
+        <a asp-action="ChessGame" class="btn btn-info">Connect</a>
+    </li>
+}
+</ul>

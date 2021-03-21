@@ -21,15 +21,14 @@ namespace ChessExamTop.Controllers
         {
             _logger = logger;
             _context = context;
-            
+
         }
 
         public async Task<IActionResult> Index()
         {
-          
+
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

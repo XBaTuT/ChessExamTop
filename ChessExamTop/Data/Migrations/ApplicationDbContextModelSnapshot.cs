@@ -16,18 +16,25 @@ namespace ChessExamTop.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.3");
 
-            modelBuilder.Entity("ChessExamTop.Models.Babich", b =>
+            modelBuilder.Entity("ChessExamTop.Models.ChessGame", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("User1")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("User2")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Babiches");
+                    b.ToTable("ChessGames");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -47,16 +47,18 @@ namespace ChessExamTop.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Babiches",
+                name: "ChessGames",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    User1 = table.Column<string>(type: "TEXT", nullable: true),
+                    User2 = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Babiches", x => x.Id);
+                    table.PrimaryKey("PK_ChessGames", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -221,7 +223,7 @@ namespace ChessExamTop.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Babiches");
+                name: "ChessGames");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
